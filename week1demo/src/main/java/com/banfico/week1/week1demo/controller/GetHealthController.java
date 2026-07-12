@@ -10,9 +10,9 @@ public class GetHealthController {
     @GetMapping("/health")
     public String getHealth(@RequestParam(required=false) String param) {
         if("Tilak".equalsIgnoreCase(param)){
-            return "Hello Tilak";
+            return "Appication Running \n WelcomeTilak";
         } else {
-            return "Hello Guest";
+            return "\"Appication Running \n Hello Guest";
         }
     }
     
