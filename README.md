@@ -1,4 +1,4 @@
-# Week 1 Spring boot REST API DEMO by banfigo
+# Week 1 Spring boot REST API DEMO by banfico
 
 # Overview
 This project is part of my backend training program.
