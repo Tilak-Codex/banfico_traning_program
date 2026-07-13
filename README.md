@@ -7,7 +7,10 @@ This project is part of my backend training program.
 
 - Creating a spring boot project using spring initializer (start.spring.io)
 
-- Spring boot layered architecture (Controller layer, Service layer , Repository layer)
+- Spring boot layered architecture 
+        Controller layer
+        Service layer 
+        Repository layer
 
 - Annotations:
 
