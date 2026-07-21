@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +40,21 @@ public class UserController {
         List<User>savedUsers= userRepo.saveAll(users);
         
         return ResponseEntity.ok(savedUsers);
+    }
+    @GetMapping("/getAllUsers")
+    public List<User> getAllUsers() {
+        return userRepo.findAll();
+    }
+
+    @GetMapping("/getUserById/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id){
+        
+        User user = userRepo.findById(id).orElse(null);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build(); // Return a 404 Not Found response if the user is not found
+        }
     }
 
 }
