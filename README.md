@@ -21,3 +21,4 @@ This project is part of my backend training program.
 - Creating basic api's with api prefix and api endpoint.
 
 - Tested the api's ("/health" and "/api/info") with postman.
+

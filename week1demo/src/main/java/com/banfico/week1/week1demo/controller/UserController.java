@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.banfico.week1.week1demo.entity.User;
 import com.banfico.week1.week1demo.repo.UserRepo;
+
+import org.springframework.web.bind.annotation.PutMapping;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -55,6 +58,20 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build(); // Return a 404 Not Found response if the user is not found
         }
+    }
+@PutMapping("/updateUserById/{id}")
+    public User updateName(@PathVariable Long id, @RequestBody User updatedData){
+        User exisitingUser=userRepo.findById(id).orElse(null);
+
+        if(exisitingUser!=null){
+            exisitingUser.setName(updatedData.getName());
+            userRepo.save(updatedData);
+            return exisitingUser;
+        }
+        else{
+            return null;
+        }
+
     }
 
 }
