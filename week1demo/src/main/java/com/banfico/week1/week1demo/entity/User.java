@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 
@@ -17,5 +19,7 @@ public class User {
         @Id // Each entity must have a primary key, and the @Id annotation is used to specify the primary key of an entity
         @GeneratedValue(strategy=GenerationType.IDENTITY)  // To auto gen Id values
         private Long id;
+        @NotEmpty(message = "Please provide valid name")
+        @NotBlank(message = "Please provide name instead of only blank spaces")
         private String name;
 }
