@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.banfico.week1.week1demo.entity.User;
 import com.banfico.week1.week1demo.repo.UserRepo;
+import com.banfico.week1.week1demo.service.UserService;
 
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -22,12 +23,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class UserController {
 
     @Autowired
-    private UserRepo userRepo;
+    private UserService userSer;
     // Creating a post Request to create a new user in the database
     @PostMapping("/createUsers")
    public  void createUser(@RequestBody User user) {
             
-        userRepo.save(user);
+        userSer.createUser(user);
 
 
 
@@ -41,44 +42,39 @@ public class UserController {
 
     @PostMapping("/createAll")
     public ResponseEntity<List<User>> createListOfUsers(@RequestBody List<User> users) {
-        List<User>savedUsers= userRepo.saveAll(users);
+        List<User>savedUsers= userSer.createListOfUsers(users);
         
         return ResponseEntity.ok(savedUsers);
     }
     @GetMapping("/getAllUsers")
     public List<User> getAllUsers() {
-        return userRepo.findAll();
+        return userSer.getAllUsers();
     }
 
     @GetMapping("/getUserById/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id){
-        
-        User user = userRepo.findById(id).orElse(null);
-        if (user != null) {
+        User user=userSer.getUserById(id);
+        if(user!=null){
             return ResponseEntity.ok(user);
-        } else {
-            return ResponseEntity.notFound().build(); // Return a 404 Not Found response if the user is not found
+        }
+        else{
+            return ResponseEntity.notFound().build();
         }
     }
 @PutMapping("/updateUserById/{id}")
-    public User updateName(@PathVariable Long id, @RequestBody User updatedData){
-        User exisitingUser=userRepo.findById(id).orElse(null);
-
-        if(exisitingUser!=null){
-            exisitingUser.setName(updatedData.getName());
-            userRepo.save(updatedData);
-            return exisitingUser;
+    public ResponseEntity<User> updateName(@PathVariable Long id, @RequestBody User updatedData){
+        User updatedUser=userSer.updateUserById(id, updatedData);
+        if(updatedUser!=null){
+            return ResponseEntity.ok(updatedUser);
         }
         else{
-            return null;
+            return ResponseEntity.notFound().build();
         }
-
     }
     @DeleteMapping("/deleteUserById/{id}")
     public ResponseEntity<User> deleteUserById(@PathVariable Long id){
-        User user=userRepo.findById(id).orElse(null);
+        User user=userSer.deleteById(id);
         if(user!=null){
-            userRepo.deleteById(id);
             return ResponseEntity.ok(user);
         }
         else{
